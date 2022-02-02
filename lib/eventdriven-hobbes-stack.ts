@@ -1,16 +1,22 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { App, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as events from 'aws-cdk-lib/aws-events';
+import { Rule } from 'aws-cdk-lib/aws-events';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as targets from 'aws-cdk-lib/aws-events-targets';
+import * as path from 'path';
+import { DynamodbStack } from '../../event-lambda-hobbes/lib/dynamodb-stack';
+import { EventbridgeHobbesStack  } from '../../eventbridge-hobbes/lib/eventbridge-hobbes-stack';
 
 export class EventdrivenHobbesStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    const app = new App();
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'EventdrivenHobbesQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+     //const dynamo = new DynamodbStack(app, 'dynamodb-stack', {});
+
+    const eventbus = new EventbridgeHobbesStack(app, 'hobbes-eventbus', {
+    });
   }
 }
